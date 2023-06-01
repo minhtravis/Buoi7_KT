@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>My Book List</title>
+  <th:block th:replace="layout::link-css"></th:block>
+</head>
+<body>
+<th:block th:replace="layout::header"></th:block>
+<form class="form-inline d-flex" th:action="@{/books/search}" method="get">
+  <input class="form-control flex-grow-1" type="search" name="searchText" placeholder="Search" aria-label="Search">
+  <button class="btn btn-outline-success flex-grow-1" type="submit">Search</button>
+</form>
+<div class="container">
+  <h1 th:text="${title}"></h1>
+  <table class="table">
+    <tr>
+      <th>Mã Nhân Viên</th>
+      <th>Tên Nhân Viên</th>
+      <th>Giới Tính</th>
+      <th>Nơi Sinh</th>
+      <th>Tên Phòng</th>
+      <th>Lương</th>
+      <th>Action</th>
+    </tr>
+    <tr th:each="nhanvien: ${nhanviens}">
+      <td th:text="${nhanvien.ma_nv}"></td>
+      <td th:text="${nhanvien.ten_nv}"></td>
+      <td>
+        <img height="120" width="150" th:src="@{/images/} + ${nhanvien.phai}"/>
+      </td>
+      <td th:text="${nhanvien.noi_sinh}"></td>
+      <td th:text="${nhanvien.phongban.ten_phong}"></td>
+      <td th:text="${nhanvien.luong}"></td>
+      <td>
+        <a th:href="@{/nhanviens/edit/{id}(id=${nhanvien.id})}">Edit</a>
+        <a th:href="@{/nhanviens/delete/{id}(id=${nhanvien.id})}" onclick="return confirm('Are you sure about that?')">Delete</a>
+      </td>
+    </tr>
+  </table>
+</div>
+<th:block th:replace="layout::footer"></th:block>
+
+</body>
+</html>

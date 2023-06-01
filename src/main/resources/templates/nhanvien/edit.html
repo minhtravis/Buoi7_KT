@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Nhân Viên</title>
+  <th:block th:replace="layout :: link-css"></th:block>
+</head>
+<body>
+<th:block th:replace="layout :: header"></th:block>
+<div class="container">
+  <h1>Edit Nhân Viên</h1>
+  <form th:action="@{/nhanviens/edit/{id}(id=${nhanvien.id})}" th:object="${nhanvien}" method="post" enctype="multipart/form-data">
+    <input type="hidden" th:field="*{id}">
+    <div class="col-6 mb-3">
+      <label class="form-label" for="ma_nv">Mã Nhân Viên</label>
+      <input type="text" class="form-control bg-white" id="ma_nv" placeholder="ma_nv" th:field="*{ma_nv}">
+    </div>
+    <div class="col-6 mb-3">
+      <label class="form-label" for="phai">Phái</label>
+      <img class="form-control" th:src="@{/images/} + *{image}" placeholder="phai"/>
+      <input class="form-control" type="file" name="imageProduct" id="phai" accept="image/png, image/jpeg">
+    </div>
+    <div class="col-6 mb-3">
+      <label class="form-label" for="ten_nv">Tên Nhân Viên</label>
+      <input type="text" class="form-control bg-white" id="ten_nv" placeholder="ten_nv" th:field="*{ten_nv}">
+    </div>
+    <div class="col-6 mb-3">
+      <label class="form-label" for="luong">Lương</label>
+      <input type="text" class="form-control bg-white" id="luong" placeholder="luong" th:field="*{luong}">
+    </div>
+    <div class="col-6 mb-3">
+      <label class="form-label" for="phongban">Phòng Ban</label>
+      <select class="form-control" id="phongban" th:field="*{phongban.ma_phong}">
+        <option value=""> ==Chọn Phòng Ban== </option>
+        <option th:each="phongban : ${phongbans}" th:value="${phongban.ma_phong}"
+                th:text="${phongban.ten_phong}"></option>
+      </select>
+    </div>
+    <input type="submit" value="Save">
+  </form>
+  <br>
+  <a th:href="@{/nhanviens}">Back to list</a>
+</div>
+<th:block th:replace="layout :: footer"></th:block>
+</body>
+</html>
